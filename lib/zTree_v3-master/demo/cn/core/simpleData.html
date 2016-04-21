@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
 	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
 	<script type="text/javascript" src="../../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
 	<!--  <script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
 	  <script type="text/javascript" src="../../../js/jquery.ztree.exedit.js"></script>-->
 	<SCRIPT type="text/javascript">
@@ -16,11 +17,14 @@
 				simpleData: {
 					enable: true
 				}
-			}
+			},
+            check: {
+                enable: true
+            }
 		};
 
 		var zNodes =[
-			{ id:1, pId:0, name:"父节点1 - 展开", open:true},
+			{ id:1, pId:0, name:"父节点1 - 展开", open:true,iconClose:"../../../img/2.png",iconOpen:"../../../img/2.png"},
 			{ id:11, pId:1, name:"父节点11 - 折叠"},
 			{ id:111, pId:11, name:"叶子节点111"},
 			{ id:112, pId:11, name:"叶子节点112"},
@@ -52,7 +56,18 @@
 		];
 
 		$(document).ready(function(){
-			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			var tree=$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            $("#showNode").click(function(){
+                var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                var node = treeObj.getNodeByParam("id", 221, null);
+                if (node) {
+                    treeObj.selectNode(node,true);
+                }
+                var node1 = treeObj.getNodeByParam("id", 222, null);
+                if (node1) {
+                    treeObj.selectNode(node1,true);
+                }
+            });
 		});
 		//-->
 	</SCRIPT>
@@ -63,6 +78,7 @@
 <h6>[ 文件路径: core/simpleData.html ]</h6>
 <div class="content_wrap">
 	<div class="zTreeDemoBackground left">
+        <button id="showNode">显示Node</button>
 		<ul id="treeDemo" class="ztree"></ul>
 	</div>
 	<div class="right">
